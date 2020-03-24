@@ -1,119 +1,58 @@
-import React, { useState } from 'react';
-// import logo from './logo.svg';
+import React from 'react';
+import { useState } from 'react';
+import Form from './Form';
+import { v4 as uuid } from 'uuid';
 import './App.css';
-import { v4 as uuid } from "uuid";
 
+const initialTeamMembers = [
+  { id: uuid(), name: '', email: '', role: '' },
 
-const teamMembers = [
-  { id: uuid(), fname: 'John', lname: 'Smith' },
-  { id: uuid(), fname: 'Jane', lname: 'Doe' },
 ]
 
 
 function App() {
-  const [friends, setFriends] = useState({ teamMembers: '' });
+  const [teamMembers, setTeamMembers] = useState(initialTeamMembers)
   const [formValues, setFormValues] = useState({
-    fname: '',
-    lname: '',
+    id: '',
+    name: '',
+    email: '',
+    role: '',
   })
-
   const onInputChange = event => {
-    // use the event object
-    // to fish out the current value
-    // and replace the WHOLE formValues object
-    // with a new one that's a copy of the old one
-    // BUT with a little override
-    const inputThatChanged = event.target.name
-    const newValueForInput = event.target.value
+    const inputChanged = event.target.name
+    const newValueInput = event.target.value
     setFormValues({
       ...formValues,
-      [inputThatChanged]: newValueForInput,
+      id: uuid(),
+      [inputChanged]: newValueInput,
     })
   }
-  // onFormSubmit = event => {
-  //   event.preventDefualt()
+  const onFormSubmit = event => {
+    event.preventDefault()
+    const newTeamMember = {
+      id: formValues.id,
+      name: formValues.name,
+      email: formValues.email,
+      role: formValues.role,
+    }
+    setTeamMembers([...teamMembers, newTeamMember])
+  }
 
-  //   const newFriend = id; uuid(),
-  //     fname; formValues.fname,
-  //       lname; formValues.lname,
 
-  //         setFriends([...friends, newFriend])//We NEED TO PASS AN ENTIRE ARRAY
-  // }
 
   return (
     <div className="App">
-      <form>
-        <label for="title">Title</label> first name
-          <input id="title" type="text" name="title" />
-        {/* onChange={onInputChange}
-        value={formValues.fname}
-        name='fname'
+      <Form
+        onInputChange={onInputChange}
+        formValues={formValues}
+        onFormSubmit={onFormSubmit}
+      />
 
-        type='text' */}
-        {/* onChange={onInputChange} // callback takes an event object
-        value={formValues.fname}
-        name='fname'
-
-        type='text' */}
-
-
-      </form>
-
-
-      <form>
-        <label for="title"></label> Last name
-  <input id="title" type="text" name="title" />
-        {/* onChange={onInputChange} // callback takes an event object
-value={formValues.fname}
-name='fname'
-
-type='text' */}
-
-
-      </form>
-      {/* <h3>List of Friends</h3>
-      {
-        friends.map(fr => <div key={fr.id}>{fr.fname} {fr.lname}</div>)
-      } */}
-      <br>
-      </br>
-
-      <form>
-        <label for="title"></label> Role
-          <input id="title" type="text" name="title" />
-
-      </form>
-
-      <br>
-      </br>
-
-      <form>
-        <label for="title"></label> Email
-          <input id="title" type="text" name="title" />
-
-      </form>
-      <input type='submit' />
-    </div >
-
+      <h2>Meet The Team!</h2>
+      {teamMembers.map(members => <div key={members.id}> {`Name: ${members.name}`} {`Email: ${members.email}`} {`Role: ${members.role}`} </div>)}
+      {/* Last Step */}
+    </div>
   );
-
 }
 
-
-
 export default App;
-
-{/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p> */}
-{/* <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-{/* </header> */ }

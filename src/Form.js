@@ -1,32 +1,34 @@
-import React, { useState } from 'react';
-// import logo from './logo.svg';
-import './App.css';
-import { v4 as uuid } from "uuid";
-import { bindCallback } from 'rxjs';
-import { getMaxListeners } from 'cluster';
+import React from 'react';
 
+function Form(props) {
+    return (
+        <form onSubmit={props.onFormSubmit}>
+            <label> Name
+              <input
+                    onChange={props.onInputChange}
+                    value={props.formValues.name}
+                    name='name'
+                    type='text' />
+            </label> <br />
+            <label> Email
+                <input
+                    onChange={props.onInputChange}
+                    value={props.formValues.email}
+                    name='email'
+                    type='text' />
+            </label> <br />
+            <label> Role
+                <input
+                    onChange={props.onInputChange}
+                    value={props.formValues.role}
+                    name='role'
+                    type='text' />
+            </label> <br />
+            <input type='submit' />
 
+        </form>
+    )
 
-const forInfo [
-    {
-        name: Bill;
-email: Bill@gmail.com;
-role: UX Designer;
-}
-{
-    name: Jill;
-    email: Jill@gmail.com;
-    role: Backend Developer;
-}
-{
-    name: Will;
-    email: Will@gmail.com;
-    role: Frontend Developer;
-}
-{
-    name: Tim;
-    email: Tim@gmail.com;
-    role: Data Scientist;
 }
 
-]
+export default Form;
